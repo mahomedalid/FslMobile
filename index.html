@@ -1,0 +1,300 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Festival de Software Libre 2011</title>
+
+    <link href="dojo-1.6.1/dojox/mobile/themes/android/android.css" rel="stylesheet"></link>
+ 
+    <!-- stylesheet will go here -->
+    <!-- dojo/javascript will go here -->
+ 
+    <script src="dojo-1.6.1/dojo/dojo.js" djConfig="isDebug:true, parseOnLoad:true, locale:'es'"></script> 
+	<script type='text/javascript'>
+		// Load the widget parser
+		dojo.require("dojox.mobile.parser");
+		// Load the base lib
+		dojo.require("dojox.mobile");
+		dojo.require("dojox.mobile.TabBar");
+		dojo.require("dojox.mobile.ScrollableView");
+		
+		dojo.require("dojox.mobile.ScrollableView");	
+
+		dojo.require("dojo.data.api.Read");
+		dojo.require("dojox.data.GoogleFeedStore");
+
+		dojo.require("dojo.string");
+		dojo.require("dojo.date.locale");
+
+		// If not a WebKit-based client, load compat
+		dojo.requireIf(!dojo.isWebKit, "dojox.mobile.compat");
+
+		var title = 'Programa del FSL 2011';	
+		var days = {'2011-11-03': 
+				[
+{'hora_inicio':'09:00:00 AM','hora_fin':'11:00:00 AM','nombre':'Registro','ponente':'Festival de Software Libre','tipo':'Evento organizaci&oacute;n'},
+{'hora_inicio':'12:00:00 PM','hora_fin':'01:00:00 PM','nombre':'FOSS - The only path for Mexico','ponente':'Jon -maddog- Hall, Linux International','tipo':'Conferencia Magistral'},
+{'hora_inicio':'02:00:00 PM','hora_fin':'03:00:00 PM','nombre':'Receso para comida','ponente':'Festival de Software Libre','tipo':'Evento organizaci&oacute;n'},
+{'hora_inicio':'04:00:00 PM','hora_fin':'05:00:00 PM','nombre':'La importancia de las Certificaciones en la Educaci&oacute;n Superior y Latino Am&eacute;rica','ponente':'Milton Jose Martil Cruz, Instituto Tecnologico de Tapachula','tipo':'Conferencia'},
+{'hora_inicio':'04:00:00 PM','hora_fin':'05:00:00 PM','nombre':'HackerSpaces, Comunidades y el Ecosistema de emprendimiento.','ponente':'Argel Arias (Levhita), HackerGarage','tipo':'Platica Informal'},
+{'hora_inicio':'04:00:00 PM','hora_fin':'07:00:00 PM','nombre':'Elastix, VOiP simple y f&aacute;cil para todos','ponente':'Jose Luis Hernandez Lopez, Simbiotica','tipo':'Tutorial'},
+{'hora_inicio':'04:00:00 PM','hora_fin':'07:00:00 PM','nombre':'Introducci&oacute;n a kvm','ponente':'Luis Antonio Galindo Castro','tipo':'Tutorial'},
+{'hora_inicio':'04:00:00 PM','hora_fin':'07:00:00 PM','nombre':'Administraci&oacute;n de Servidores con Puppet','ponente':'Marco(Tony) Garcia','tipo':'Taller'},
+{'hora_inicio':'04:00:00 PM','hora_fin':'07:00:00 PM','nombre':'Clustering de alta disponibilidad con Red Hat Cluster Suite','ponente':'Rolando Cedillo, Red Hat','tipo':'Taller'},
+{'hora_inicio':'05:00:00 PM','hora_fin':'06:00:00 PM','nombre':'Software y multimedios colaborativos: saneando el efecto Bollywood','ponente':'Jos&eacute; Mar&iacute;a Serralde Ruiz, MEPART','tipo':'Conferencia'},
+{'hora_inicio':'05:00:00 PM','hora_fin':'06:00:00 PM','nombre':'Free as in Market','ponente':'Sandino Araico S&aacute;nchez','tipo':'Conferencia'},
+{'hora_inicio':'07:00:00 PM','hora_fin':'12:00:00 AM','nombre':'Brindis','ponente':'Festival de Software Libre','tipo':'Evento organizaci&oacute;n'}
+				]
+			   ,'2011-11-04': 
+				[
+{'hora_inicio':'09:00:00 AM','hora_fin':'11:00:00 AM','nombre':'Tlalokes 2.0 el framework PHP m&aacute;s r&aacute;pido \'del oeste\'','ponente':'Basilio Briceño','tipo':'Tutorial'},
+{'hora_inicio':'09:00:00 AM','hora_fin':'11:00:00 AM','nombre':'Desarrollo de aplicaciones m&oacute;biles con phoneGap','ponente':'Mahomedalid Pacheco','tipo':'Taller'},
+{'hora_inicio':'09:00:00 AM','hora_fin':'11:00:00 AM','nombre':'Track Empresarial Linea de Comandos Linux','ponente':'Gabriel Orozco, Grupo Linux de Occidente','tipo':'Taller'},
+{'hora_inicio':'10:00:00 AM','hora_fin':'11:00:00 AM','nombre':'Administrando Infraestructura como Servicio con Aeolus','ponente':'Luis German Ramirez Lobato, Sellcom Solutions S.A. de C.V.','tipo':'Conferencia'},
+{'hora_inicio':'10:00:00 AM','hora_fin':'11:00:00 AM','nombre':'DRM ¿Derechos o Restricciones?','ponente':'Gabriel Saldaña','tipo':'Conferencia'},
+{'hora_inicio':'10:00:00 AM','hora_fin':'11:00:00 AM','nombre':'Haciendo y publicando m&uacute;sica con FLOSS: concierto tutorial','ponente':'Jos&eacute; Mar&iacute;a Serralde Ruiz, MEPART','tipo':'Tutorial'},
+{'hora_inicio':'11:00:00 AM','hora_fin':'12:00:00 PM','nombre':'C&eacute;lulas de producci&oacute;n con Blender 3D','ponente':'Octavio Augusto M&eacute;ndez S&aacute;nchez, G-Blender','tipo':'Conferencia'},
+{'hora_inicio':'11:00:00 AM','hora_fin':'12:00:00 PM','nombre':'La Interoperabilidad: Ques, Comos y Porques','ponente':'Geronimo Orozco / Juan Navarro, Intel','tipo':'Conferencia'},
+{'hora_inicio':'11:00:00 AM','hora_fin':'12:00:00 PM','nombre':'Elaboraci&oacute;n de una Publicaci&oacute;n Profesional con Software Libre.','ponente':'Celso FLORES, CreaLibre','tipo':'Tutorial'},
+{'hora_inicio':'11:00:00 AM','hora_fin':'01:00:00 PM','nombre':'Gimp una herramienta de apoyo al diseñador Gr&aacute;fico','ponente':'Georgina P&eacute;rez hern&aacute;ndez','tipo':'Taller'},
+{'hora_inicio':'12:00:00 PM','hora_fin':'01:00:00 PM','nombre':'Desarrollo de aplicaciones Gnome y el proyecto Mono.','ponente':'Jes&uacute;s Adlair Cerecedo M&eacute;ndez, SCISASOFT','tipo':'Conferencia'},
+{'hora_inicio':'12:00:00 PM','hora_fin':'01:00:00 PM','nombre':'La calidad y sus efectos salariales','ponente':'Basilio Briceño','tipo':'Conferencia'},
+{'hora_inicio':'12:00:00 PM','hora_fin':'01:00:00 PM','nombre':'Construcci&oacute;n Colaborativa del Conocimiento: El libro','ponente':'Gunnar Eyal Wolf Iszaevich, IIEc - UNAM','tipo':'Conferencia'},
+{'hora_inicio':'01:00:00 PM','hora_fin':'02:00:00 PM','nombre':'Project Cauã: Creating jobs, saving the environment and making computers easier to use','ponente':'Jon -maddog- Hall, Linux International','tipo':'Conferencia Magistral'},
+{'hora_inicio':'02:00:00 PM','hora_fin':'03:00:00 PM','nombre':'RECESO PARA COMIDA','ponente':'Festival de Software Libre','tipo':'Evento organizaci&oacute;n'},
+{'hora_inicio':'04:00:00 PM','hora_fin':'05:00:00 PM','nombre':'Freelancing y pequeños negocios con Drupal','ponente':'Joaqu&iacute;n Bravo Contreras, Axai','tipo':'Conferencia'},
+{'hora_inicio':'04:00:00 PM','hora_fin':'05:00:00 PM','nombre':'Facturaci&oacute;n electr&oacute;nica del SAT para programadores','ponente':'Fernando Romo Alpuche, cofradia.org','tipo':'Conferencia'},
+{'hora_inicio':'04:00:00 PM','hora_fin':'05:00:00 PM','nombre':'Free Network Services: Libertad en la Nube','ponente':'Gabriel Saldaña','tipo':'Conferencia'},
+{'hora_inicio':'04:00:00 PM','hora_fin':'08:00:00 PM','nombre':'Animaci&oacute;n Colectiva con Blender 3D y con licenciamiento CC','ponente':'Octavio Augusto M&eacute;ndez S&aacute;nchez, G-Blender','tipo':'Taller'},
+{'hora_inicio':'04:00:00 PM','hora_fin':'08:00:00 PM','nombre':'Track Empresarial tcp/ip y servicios','ponente':'Felipe Eduardo S&aacute;nchez D&iacute;az Dur&aacute;n','tipo':'Taller'},
+{'hora_inicio':'04:00:00 PM','hora_fin':'08:00:00 PM','nombre':'Servidor de almacenamiento (SAN/NAS)','ponente':'Sandino Araico S&aacute;nchez','tipo':'Tutorial'},
+{'hora_inicio':'05:00:00 PM','hora_fin':'06:00:00 PM','nombre':'Panel de Certificaciones','ponente':'Festival de Software Libre','tipo':'Conferencia'},
+{'hora_inicio':'05:00:00 PM','hora_fin':'06:00:00 PM','nombre':'Como construir una infraestructura escalable de manera f&aacute;cil y sencilla (puppet + cobbler + kickstart + pxe)','ponente':'Kwame Bahena, Electronic Arts.','tipo':'Conferencia'},
+{'hora_inicio':'05:00:00 PM','hora_fin':'06:00:00 PM','nombre':'Cortando la brecha digital: Mozilla M&eacute;xico y la Localizaci&oacute;n.','ponente':'Odin Mojica, Mozilla M&eacute;xico','tipo':'Conferencia'}
+				]
+ 			   ,'2011-11-05': 
+				[
+{'hora_inicio':'09:00:00 AM','hora_fin':'01:00:00 PM','nombre':'Desarrollando aplicaciones con Mono','ponente':'Jes&uacute;s Adlair Cerecedo M&eacute;ndez, SCISASOFT','tipo':'Taller'},
+{'hora_inicio':'09:00:00 AM','hora_fin':'01:00:00 PM','nombre':'Taller de creaci&oacute;n de un VPN controlada con IPTables/NetFilter','ponente':'Richard Raymond Couture, LinuxCabal A. C.','tipo':'Taller'},
+{'hora_inicio':'10:00:00 AM','hora_fin':'11:00:00 AM','nombre':'Desarrollo de aplicaciones Web con ZanPHP Framework Mexicano','ponente':'Carlos Santana Rold&aacute;n, MilkZoft','tipo':'Conferencia'},
+{'hora_inicio':'10:00:00 AM','hora_fin':'11:00:00 AM','nombre':'Examen de Certificaci&oacute;n Latinux','ponente':'Festival de Software Libre','tipo':'Taller'},
+{'hora_inicio':'10:00:00 AM','hora_fin':'12:00:00 PM','nombre':'Programaci&oacute;n de alto nivel en C con GLib y Autotools','ponente':'Sandino Flores Moreno','tipo':'Tutorial'},
+{'hora_inicio':'11:00:00 AM','hora_fin':'12:00:00 PM','nombre':'C|IE: Violaci&oacute;n a la intimidad','ponente':'Carlos A. Lozano, blueMammut','tipo':'Conferencia'},
+{'hora_inicio':'11:00:00 AM','hora_fin':'12:00:00 PM','nombre':'Asterisk Intimo: usos pr&aacute;cticos del AMI','ponente':'Nicolas Gudiño','tipo':'Conferencia'},
+{'hora_inicio':'12:00:00 PM','hora_fin':'01:00:00 PM','nombre':'FreeSWITCH - Asterisk con esteroides (Avoiding Deadlock)','ponente':'Moises Silva, Sangoma Technologies','tipo':'Conferencia'},
+{'hora_inicio':'12:00:00 PM','hora_fin':'01:00:00 PM','nombre':'Tecnolog&iacute;as de Alta Disponibilidad en Linux','ponente':'Miguel Angel Barajas, SUSE','tipo':'Conferencia'},
+{'hora_inicio':'12:00:00 PM','hora_fin':'01:00:00 PM','nombre':'¡Ups! c&oacute;digo inseguro: detecci&oacute;n, explotaci&oacute;n y mitigaci&oacute;n de vulnerabilidades en software','ponente':'Carlos A. Lozano, blueMammut','tipo':'Conferencia'},
+{'hora_inicio':'01:00:00 PM','hora_fin':'02:00:00 PM','nombre':'Propuestas en el senado para la adopcion de Software Libre en M&eacute;xico. Panel','ponente':'Senador Francisco Javier Castell&oacute;n Fonseca, Senado de la Republica Mexicana','tipo':'Conferencia Magistral'},
+{'hora_inicio':'02:00:00 PM','hora_fin':'02:00:00 PM','nombre':'Panel de Clausura/Preguntas','ponente':'Festival de Software Libre','tipo':'Evento organizaci&oacute;n'},
+{'hora_inicio':'03:00:00 PM','hora_fin':'04:00:00 PM','nombre':'Entrega de Constancias','ponente':'Festival de Software Libre','tipo':'Evento organizaci&oacute;n'},
+{'hora_inicio':'06:00:00 PM','hora_fin':'12:00:00 AM','nombre':'Convivio de Clausura','ponente':'Festival de Software Libre','tipo':'Evento organizaci&oacute;n'}
+				]
+			   };
+
+		var speakers = [
+				{id:'jonmaddoghall', name:'Jon *maddog* Hall', image:'http://www.fslvallarta.org/registro/fotos/ponentes/foto_51.jpeg', bio:'Profesor Universitario y Columnista habitual. Presidente de Linux International, una asociaci&oacute;n de usuarios de computadoras que apoyan y promueven el sistema operativo Linux.', email: 'maddog@li.org' }
+			,	{id:'jesusadlair', name: 'Jes&uacute;s Adlair Cerecedo Mend&eacute;z', image: 'http://www.fslvallarta.org/registro/fotos/ponentes/foto_75.jpeg', bio: 'El Software Libre u Open Source ha sido su actividad socialista por excelencia. Experimentar con "lo desconocido" le llev&oacute; a su primer contacto con Linux a finales de los 90\'s cuando prob&oacute; Corel Linux, mismo que era distribuido por una conocida revista inform&aacute;tica.', email: 'some@some.com'}
+				];
+
+		var newsFeed = 'http://www.fslvallarta.org/rss.xml';
+//		var news = dijit.byId('feedGrid').setQuery({url:newsFeed});
+//		var news = new dojox.data.GoogleFeedStore ();
+
+		var mentionTemplate = 
+			'<img src="${profile_image_url}" alt="${from_user}" class="tweetviewAvatar" />&nbsp;<small style="font-size: 0.6em;">@${from_user}</small><br /> ' +
+			'<span style="font-size: 0.7em">${text}</span><span style="float: right; font-size: 0.4em;">${created_at}</span><div style="clear: both;"></div>';
+
+		var profileTemplate = 
+			'<div id=${id}><table><tbody><tr><td><img src="${image}" alt="${name}" height="45" /></td>'
+			+'<td><span style="font-size: 0.8em">${name}</span><br />'
+			+'<span style="font-size: 0.6em">${bio}</span><br /><span style="float: right; font-size: 0.5em;"><a>${email}</a></span>'
+			+'</td></tr></tbody></table></div>';
+			
+		var itemTemplate = 
+			'<div><div><small>[${hora_inicio} - ${hora_fin}] <span style="color: gray">${tipo}</span></small></div><h3>${nombre}</h3><i>${ponente}</i>'
+			+'</div>';
+
+		function loadContent () 
+		{
+			var daysPanel = dijit.byId('days');
+
+			for(var day in days) {
+				var dayHead = dojo.date.locale.format(new Date(day), {datePattern: "EEEE d 'de' MMMM", selector: 'date'}).toUpperCase();
+				
+				var dayOption = new dojox.mobile.ListItem ({rightText:'ver', label:dayHead, moveTo:day});
+				daysPanel.addChild(dayOption);
+					
+				var dayView = new dojox.mobile.ScrollableView ({id: day});
+
+				dayView.addChild(new dojox.mobile.Heading({label:dayHead, moveTo:'days', back:'Regresar'}));
+
+				var itemList = new dojox.mobile.EdgeToEdgeList ({id: day+'_list'});
+
+				for(var i = 0; i < days[day].length; i++) {
+					var item = new dojox.mobile.ListItem({class:'mblVariableHeight'});
+					item.containerNode.innerHTML = dojo.string.substitute(itemTemplate, days[day][i]);
+					itemList.addChild(item);
+				}
+						
+				dayView.addChild (itemList);
+
+				dayView.startup();
+
+				dojo.place(dayView.domNode, dojo.body(), 5);
+
+				var defs = [];
+
+				dojo.io.script.get({
+			                callbackParamName: "callback",
+			                preventCache: false,
+			                timeout: 3000,
+                			url: "http://search.twitter.com/search.json?q=fslvallarta&rpp=10",
+					load: function (data){
+						var results = data.results;
+						for(var i = 0; i < results.length; i++) {
+							var item = new dojox.mobile.ListItem({class:'mblVariableHeight'});
+							dijit.byId('mentions_list').addChild(item);
+						//	var itemData = {avatar:results[i].profile_image_url, user:results[i].from_user, };
+							item.containerNode.innerHTML = dojo.string.substitute(mentionTemplate, results[i]);
+						}
+					}
+				});
+			}
+		
+			loadSpeakers(speakers);
+		}
+
+		function loadSpeakers (speakers) {	
+			var speakersList = new dojox.mobile.EdgeToEdgeList ();
+
+			for (var key in speakers) {
+				var item = new dojox.mobile.ListItem({class:'mblVariableHeight'});
+				speakersList.addChild (item);
+				item.containerNode.innerHTML = dojo.string.substitute(profileTemplate, speakers [key]);
+			}
+				
+			dijit.byId('ponentes').addChild(speakersList);
+		}
+		
+		function loadNoticiasRss (url) {
+			var feedRss = new dojox.data.GoogleFeedStore ();
+			
+			var onError = function (error) {
+				alert("Error: "+error);
+			};
+
+			var onComplete = function (items, request) {
+/*				var misal = getFromLocalStorage(name);
+
+				if(typeof(misal) == 'object') {} else { misal = {items: {}}; }
+
+				for (var key in items) {
+					var item = items[key]
+					var skey = item.title + item.publishedDate;
+					skey = dojox.encoding.digests.MD5(skey, dojox.encoding.digests.outputTypes.Hex);
+					misal.items[skey] = item;
+				}
+
+				setInLocalStorage(name, misal);
+				callback();*/
+			};
+			
+			feedRss.fetch({
+				query: { url: url },
+				count: 20,
+				onComplete: onComplete,
+				onError: onError
+			});
+		}
+
+		function loadRss (name) {
+			var misalRssItemTemplate =
+				'<div>${title}</div>'
+				+'<div><span style="font-size: 0.8em;">${contentSnippet}</span></div>'
+				+'<div><span style="font-size: 0.7em;color: gray"> ${publishedDate}</span></div>';
+
+			dijit.byId(name+'_rss_list').destroyDescendants();
+			var misal = getFromLocalStorage(name);
+			if(misal && misal.items) {
+				for (var key in misal.items) {
+					var clkObj = { 
+						  item: misal.items[key]
+						, doClick:function(){
+							showContent (this.item.content, this.item.title, dojo.byId(name));
+						 }
+					};
+				
+					var listItem = new dojox.mobile.ListItem({"class":'mblVariableHeight',"label": misal.items[key].title, "moveTo": "dynamic_view"});
+					dijit.byId(name+'_rss_list').addChild(listItem);
+//					listItem.containerNode.innerHTML = dojo.string.substitute(misalRssItemTemplate, misal.items[key]);
+				 	
+					var event = dojo.connect(listItem.domNode, "onclick", dojo.hitch(clkObj, 'doClick'));
+
+				}
+			}
+		}
+
+		dojo.addOnLoad(loadContent);
+	</script>
+    </head>
+	<body id='body'>
+		<div id="days" dojoType="dojox.mobile.ScrollableView" selected="true">
+			<h1 dojoType="dojox.mobile.Heading" fixed="top">Programa del FSL 2011</h1>
+		</div>
+
+		<div id="ponentes" dojoType="dojox.mobile.ScrollableView">
+			<h1 dojoType="dojox.mobile.Heading" fixed="top">Ponentes</h1>
+		</div>
+
+		<div id="noticias" dojoType="dojox.mobile.ScrollableView">
+			<h1 dojoType="dojox.mobile.Heading" fixed="top">Noticias</h1>
+			<ul dojoType="dojox.mobile.EdgeToEdgeList" id='noticias_rss'>
+				Soon
+			</ul>
+		</div>
+
+		<div id="mentions" dojoType="dojox.mobile.ScrollableView">
+			<h1 dojoType="dojox.mobile.Heading" fixed="top">#fslvallarta</h1>
+			<ul dojoType='dojox.mobile.EdgeToEdgeList' id='mentions_list'>
+			</ul>
+		</div>
+
+		<div id="contacto" dojoType="dojox.mobile.ScrollableView">
+			<h1 dojoType="dojox.mobile.Heading" fixed="top">Contacto</h1>
+			<h2>Sede:</h2>
+			<p>Hotel Holiday Inn Restort, Puerto Vallarta, Jalisco, M&eacute;xico<br />
+			Av. Francisco Medina Ascencio y Rio Amazonas</p>
+
+			<h2>Tel&eacute;fonos de inter&eacute;s</h2>
+			<p>Emergencias: 060 <br />
+			   Cruz Roja: (322) 222 1533<br />
+			   Polic&iacute;a: (322) 221 2586<br />
+			   Profeco (problemas al consumidor): (322) 222 2554<br />
+			   Turismo: (322) 222 0242<br />
+			</p>
+
+			<h2>Coordinaci&oacute;n general:</h2>	
+			<p>Alejandro L&oacute;pez Rodr&iacute;guez<br />@alexlopezgdl</p>
+
+			<h2>Desarrollo de aplicaci&oacute;n:</h2>
+			<p>Mahomedalid Pacheco<br />@mictlan</p>
+		</div>
+
+		<div id="icoaster" dojoType="dojox.mobile.ScrollableView">
+			<h1 dojoType="dojox.mobile.Heading" fixed="top">iCoaster (http://tirania.org/icoaster/)</h1>
+			<div align=center style="background-color: #ddd; color: #222;  font-family: Helvetica; font-size: 14px; margin: 0; padding: 0;">
+				<img src="icoaster.png" />
+			</div>
+		</div>
+
+		<ul dojoType="dojox.mobile.TabBar" style="margin-top:-49px;" iconBase="iconStrip.png">
+			<li dojoType="dojox.mobile.TabBarButton" selected="true" moveTo="days" iconPos1="0,0,29,30">Programa</li>
+			<li dojoType="dojox.mobile.TabBarButton" moveTo="ponentes" iconPos1="0,28,28,28">Ponentes</li>
+			<li dojoType="dojox.mobile.TabBarButton" moveTo="noticias" iconPos1="0,50,29,58">Noticias</li>
+			<li dojoType="dojox.mobile.TabBarButton" moveTo="mentions" iconPos1="0,78,28,88">#FslVallarta</li>
+			<li dojoType="dojox.mobile.TabBarButton" moveTo="contacto" iconPos1="0,100,28,116">Contacto</li>
+			<li dojoType="dojox.mobile.TabBarButton" moveTo="icoaster" iconPos1="0,0,0,0">iCoaster</li>
+		</ul>
+	</body>
+</html>
